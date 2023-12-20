@@ -9,6 +9,9 @@ namespace Project_partC_Horbach_program
 {
     public class Hotel : IHotel, IMyEnumerable
     {
+        // Вбудований делегат Action для події заселення
+        public event Action<Guest, Room> GuestCheckedIn;
+
         public string Country { get; set; } // Властивість для зберігання країни, до якої належить готель.
 
         public string City { get; set; } // Властивість для зберігання міста, де розташований готель.
@@ -175,7 +178,8 @@ namespace Project_partC_Horbach_program
             var checkInLog = new CheckInLog(guest.CheckInTime, guest, room, checkedInBy);
             CheckInLogs.Add(checkInLog);
 
-            Console.WriteLine($"{guest.Get_Full_Name()} був успішно зареєстрований {checkedInBy.Get_Full_Name()}.");
+            // Виклик події заселення
+            GuestCheckedIn?.Invoke(guest, room);
         }
 
         public void RemoveGuest(Guest guest, HotelStaff checkedOutBy, Room room)
