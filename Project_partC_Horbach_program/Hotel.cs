@@ -12,6 +12,9 @@ namespace Project_partC_Horbach_program
         // Вбудований делегат Action для події заселення
         public event Action<Guest, Room> GuestCheckedIn;
 
+        // Вбудований делегат Action для події видалення стафу
+        public event Action<HotelStaff> StaffRemoved;
+
         public string Country { get; set; } // Властивість для зберігання країни, до якої належить готель.
 
         public string City { get; set; } // Властивість для зберігання міста, де розташований готель.
@@ -115,7 +118,8 @@ namespace Project_partC_Horbach_program
             staff.Id = dismissedStaff.Count + 1;
 
             dismissedStaff.Add(staff);
-            Console.WriteLine($"Співробітника {staff.Get_Full_Name()} уволено. Новий ID: {staff.Id}");
+            // Виклик події видалення співробітника
+            StaffRemoved?.Invoke(staff);
         }
 
 
