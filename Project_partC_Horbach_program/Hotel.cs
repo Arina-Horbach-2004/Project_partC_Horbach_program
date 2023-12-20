@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Project_partC_Horbach_program;
 
 namespace Project_partC_Horbach_program
 {
+    public delegate void GuestCheckedOutEventHandler(Guest guest);
     public class Hotel : IHotel, IMyEnumerable
     {
         // Вбудований делегат Action для події заселення
@@ -14,6 +16,9 @@ namespace Project_partC_Horbach_program
 
         // Вбудований делегат Action для події видалення стафу
         public event Action<HotelStaff> StaffRemoved;
+
+        // Власний делегат для події виселення
+        public event GuestCheckedOutEventHandler GuestCheckedOut;
 
         public string Country { get; set; } // Властивість для зберігання країни, до якої належить готель.
 
@@ -214,6 +219,9 @@ namespace Project_partC_Horbach_program
                 // Додавання інформації про виселення у журнал виписки
                 var checkOutLog = new CheckOutLog(guest.CheckInTime, guest, room, checkedOutBy);
                 CheckOutLogs.Add(checkOutLog);
+
+                // Виклик події виселення гостя 
+                GuestCheckedOut?.Invoke(guest);
             }
             else
             {
