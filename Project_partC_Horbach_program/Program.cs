@@ -16,6 +16,30 @@ namespace Project_partC_Horbach_program
             Console.OutputEncoding = Encoding.UTF8;
             Hotel hotel = new Hotel("Ukraine", "Kiev");
 
+            // Підписка на подію заселення гостя
+            hotel.GuestCheckedIn += (guest, room) =>
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Гість {guest.Get_Full_Name()} заселений в номер {room.RoomNumber}.");
+                Console.ResetColor();
+            };
+
+            // Підписка на подію виселення гостя
+            hotel.GuestCheckedOut += guest =>
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Гість {guest.Get_Full_Name()} виселений.");
+                Console.ResetColor();
+            };
+
+            // Підписка на подію видалення сотрудника
+            hotel.StaffRemoved += staff =>
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Співробітник {staff.Get_Full_Name()} видалений.");
+                Console.ResetColor();
+            };
+
             while (true)
             {
                 Console.WriteLine("Меню:");
@@ -538,7 +562,6 @@ namespace Project_partC_Horbach_program
             try
             {
                 hotel.RemoveGuest(guest, staff, room);
-                Console.WriteLine($" {guest.Get_Full_Name()} виписано.");
             }
             catch (Exception ex)
             {
@@ -681,7 +704,6 @@ namespace Project_partC_Horbach_program
             try
             {
                 hotel.RemoveStaff(staffm);
-                Console.WriteLine($"Працівника {staffm.Get_Full_Name()} звільнено.");
             }
             catch (Exception ex)
             {
