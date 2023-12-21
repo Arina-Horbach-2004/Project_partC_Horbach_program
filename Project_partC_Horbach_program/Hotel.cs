@@ -9,7 +9,7 @@ using Project_partC_Horbach_program;
 namespace Project_partC_Horbach_program
 {
     public delegate void GuestCheckedOutEventHandler(Guest guest);
-    public class Hotel : IHotel, IMyEnumerable
+    public class Hotel : IHotel, IEnumerable
     {
         // Вбудований делегат Action для події заселення
         public event Action<Guest, Room> GuestCheckedIn;
